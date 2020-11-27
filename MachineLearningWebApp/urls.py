@@ -21,5 +21,5 @@ from firstPage import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     url('^$', views.index, name='Homepage'),
-    url('predictStockPrice', views.predictStockPrice, name='predictStockPrice')
+    url('predictStockPrice', views.predictStockPrice, name='predictStockPrice'),
 ]

@@ -17,9 +17,10 @@
             <div class="col-md-4 col-sm-4">
                 <label for="fname">Upload:</label>
             </div>
-            <input name="StockData" type="file"><br><br>
+            <input name="csv_file" type="file"><br><br>
             <br>
             <input type="submit" value="Submit"/>
+        {{ loaded_data | safe }}
     </form>
     <br>
 </body>

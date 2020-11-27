@@ -36,7 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'firstPage'
+    'firstPage',
+    'import_export'
 ]
 
 MIDDLEWARE = [
@@ -50,9 +51,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'MachineLearningWebApp.urls'
-
-print(BASE_DIR)
-print(os.path.join(BASE_DIR, 'template'))
 
 TEMPLATES = [
     {
