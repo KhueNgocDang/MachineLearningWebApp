@@ -11,7 +11,6 @@ from .resources import *
 admin.site.register(StatementEntries)
 admin.site.register(ItemSetting)
 admin.site.register(ItemFact)
-admin.site.register(StockInfo)
 admin.site.register(IndexInfo)
 
 
@@ -23,6 +22,12 @@ class ExchangeAdmin(ImportExportModelAdmin):
 @admin.register(Company)
 class CompanyAdmin(ImportExportModelAdmin):
     list_display = ("ticker", "name", "exchange", "industry")
+    pass
+
+
+@admin.register(StockInfo)
+class StockInfoAdmin(ImportExportModelAdmin):
+    list_display = ("ticker", "day", "close", "volume")
     pass
 
 

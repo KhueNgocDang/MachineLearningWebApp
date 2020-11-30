@@ -1,28 +1,67 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
+
 <head>
-    <title>Stock price prediction</title>
+<meta charset="utf-8">
+<title>chatsjs</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 </head>
-<body>
 
-    {{a}}
+<body class="container-fluid">
+<center class="row">
+	<h1>implementation of <b>chartJS</b> using <b>django</b></h1>
+</center>
+<hr />
+<div class="row">
+	<div class="col-md-6">
+	<canvas id="myChartline"></canvas>
+	</div>
+</div>
 
-    <h2>Check next day stock price prediction</h2>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4"></script>
 
-    <h2>Please enter details:</h2>
-    <br>
-    <form method="post"  enctype="multipart/form-data" action="predictStockPrice">
-        {% csrf_token %}
-            <div class="col-md-4 col-sm-4">
-                <label for="fname">Upload:</label>
-            </div>
-            <input name="csv_file" type="file"><br><br>
-            <br>
-            <input type="submit" value="Submit"/>
-        {{ loaded_data | safe }}
-    </form>
-    <br>
+<script>
+	var endpoint = '/predictStockPrice';
+	var dataJ=JSON.parse('{{ data|safe }}');
+	var day = dataJ.day;
+	var close = dataJ.close;
+	var predict = dataJ.pclose;
+	var ctx = document.getElementById("myChartline").getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'line',
+
+            // The data for our dataset
+            data:{
+                //labels:['day','close','preidct close'],
+                datasets:dataJ
+            },
+
+		// Configuration options go here
+		options: {
+		scales: {
+			xAxes: [{
+			display: true
+			}],
+			yAxes: [{
+			ticks: {
+				beginAtZero: true
+			}
+			}]
+		}
+		}
+
+	});
+
+</script>
 </body>
 
 </html>

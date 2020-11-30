@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'firstPage',
-    'import_export'
+    'import_export',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
