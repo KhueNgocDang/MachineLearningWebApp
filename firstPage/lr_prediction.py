@@ -54,6 +54,6 @@ def lr_prediction(stock_symbol):
     X_data = dataframe[['lagged volume', '21 days MA', '14 days MA', '7 days MA', '7 days STD']]
     result = dataframe[['day', 'close']]
     result['pclose'] = lr_model.predict(X_data)
-    result = result.fillna('')
+    result = result.fillna('null')
 
-    return get_json(result)
+    return result

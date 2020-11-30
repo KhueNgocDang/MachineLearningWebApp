@@ -30,11 +30,22 @@ def index(request):
 
     return render(request, 'company_template.html', context)
 
+
 @api_view(('GET',))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def predictStockPrice(request):
     symbol = request.GET['Company']
     data = lr_prediction(symbol)
+    data['day'] = pd.to_datetime(data.day, format='%Y-%m-%d')
+    data['day'] = data['day'].dt.strftime('%Y-%m-%d')
+    data = data.set_index('day')
+    out = {'labels': data.index.tolist(), 'datasets': []}
+    for col in data.columns:
+        out['datasets'].append({
+            'label': col,
+            'data': data[col].values.tolist()
+        })
+
     # data = json.loads(result)
-    return Response({'data': data}, template_name='index.html')
-   # return render(request, 'index.html', {'data': data})
+    return Response({'data': out}, template_name='index.html')
+# return render(request, 'index.html', {'data': data})

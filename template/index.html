@@ -20,36 +20,28 @@
 	<h1>implementation of <b>chartJS</b> using <b>django</b></h1>
 </center>
 <hr />
-<div class="row">
-	<div class="col-md-6">
-	<canvas id="myChartline"></canvas>
-	</div>
-</div>
-
+	<canvas id="myChartline" width="1000px" height="600px"></canvas>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4"></script>
 
 <script>
 	var endpoint = '/predictStockPrice';
-	var dataJ=JSON.parse('{{ data|safe }}');
-	var day = dataJ.day;
-	var close = dataJ.close;
-	var predict = dataJ.pclose;
+	var dataJ={{ data|safe }}
 	var ctx = document.getElementById("myChartline").getContext('2d');
         var chart = new Chart(ctx, {
             // The type of chart we want to create
             type: 'line',
-
             // The data for our dataset
-            data:{
-                //labels:['day','close','preidct close'],
-                datasets:dataJ
-            },
+            data:{{ data|safe }},
 
 		// Configuration options go here
 		options: {
 		scales: {
 			xAxes: [{
-			display: true
+			display: true,
+                ticks: {
+			    autoSkip: false
+                },
 			}],
 			yAxes: [{
 			ticks: {
