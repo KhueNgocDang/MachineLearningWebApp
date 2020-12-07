@@ -40,11 +40,16 @@ def predictStockPrice(request):
     data['day'] = data['day'].dt.strftime('%Y-%m-%d')
     data = data.set_index('day')
     out = {'labels': data.index.tolist(), 'datasets': []}
-    for col in data.columns:
-        out['datasets'].append({
-            'label': col,
-            'data': data[col].values.tolist()
-        })
+    out['datasets'].append({
+        'label': 'Close',
+        'data': data['close'].values.tolist(),
+        'backgroundColor': 'rgba(255,99,132,0.2)'
+    })
+    out['datasets'].append({
+        'label': 'PredictClose',
+        'data': data['pclose'].values.tolist(),
+        'backgroundColor': 'rgba(54,162,64,0.2)'
+    })
 
     # data = json.loads(result)
     return Response({'data': out}, template_name='index.html')

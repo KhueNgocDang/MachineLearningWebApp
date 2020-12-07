@@ -55,5 +55,6 @@ def lr_prediction(stock_symbol):
     result = dataframe[['day', 'close']]
     result['pclose'] = lr_model.predict(X_data)
     result = result.fillna('null')
+    result = result.reindex(index=result.index[::-1])
 
     return result
