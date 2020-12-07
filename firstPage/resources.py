@@ -7,6 +7,11 @@ class CompanyResource(resources.ModelResource):
         model = Company
 
 
+class StockInfoResource(resources.ModelResource):
+    class Meta:
+        model = StockInfo
+
+
 class ExchangeResource(resources.ModelResource):
     class Meta:
         model = Exchange
