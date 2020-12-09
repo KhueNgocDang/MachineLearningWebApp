@@ -20,21 +20,16 @@ from .models import StockInfo
 
 def index(request):
     # companies = [obj.ticker for obj in Company.objects.all()]
-    form = CompanyForm(request.POST, initial=0)
+    if request.method == 'POST':
+        csv_file = request.FILES['file'].file
 
-    if form.is_valid():
-        instance = form.save(commit=False)
-        instance.save()
-
-    context = {'form': CompanyForm(request.POST)}
-
-    return render(request, 'company_template.html', context)
+    return render(request, 'company_template.html')
 
 
-@api_view(('GET',))
+@api_view(('POST',))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def predictStockPrice(request):
-    symbol = request.GET['Company']
+    symbol = request.FILES['file'].file
     data = lr_prediction(symbol)
     data['day'] = pd.to_datetime(data.day, format='%Y-%m-%d')
     data['day'] = data['day'].dt.strftime('%Y-%m-%d')
