@@ -22,6 +22,7 @@
     <orderEntry type="library" name="chart.js" level="application" />
     <orderEntry type="library" name="loader" level="application" />
     <orderEntry type="library" name="moment.js" level="application" />
+    <orderEntry type="library" name="@popperjs" level="application" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Django" />
