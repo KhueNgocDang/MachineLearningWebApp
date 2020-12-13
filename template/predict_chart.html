@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+<meta charset="utf-8">
+<title>chatsjs</title>
+<!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+<!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+
+</head>
+
+<body class="container-fluid">
+<center class="row">
+	<h1>Biểu đồ dữ liệu dự đoán </h1>
+</center>
+<hr />
+	<canvas id="myChartline" width="1000px" height="600px"></canvas>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4"></script>
+
+<script>
+	var endpoint = '/predictStockPriceFromDataBase';
+	var dataJ={{ data|safe }}
+	var ctx = document.getElementById("myChartline").getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'line',
+            // The data for our dataset
+            data:{{ data|safe }},
+
+		// Configuration options go here
+		options: {
+		scales: {
+			xAxes: [{
+			display: true,
+                ticks: {
+			    autoSkip: false
+                },
+			}],
+			yAxes: [{
+			ticks: {
+				beginAtZero: true
+			}
+			}]
+		}
+		}
+
+	});
+
+</script>
+</body>
+
+</html>

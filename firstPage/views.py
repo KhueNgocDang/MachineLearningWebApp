@@ -14,38 +14,38 @@ from template import *
 from .forms import *
 
 # Create your views here.
-from .lr_prediction import lr_prediction
+from .lr_prediction import lr_prediction, fetch_csv
 from .models import StockInfo
 
 
 def index(request):
     # companies = [obj.ticker for obj in Company.objects.all()]
-    if request.method == 'POST':
-        csv_file = request.FILES['file'].file
+    form = CompanyForm(request.POST, initial=0)
 
-    return render(request, 'company_template.html')
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.save()
+
+    context = {'form': CompanyForm(request.POST)}
+
+    return render(request, 'index.html', context)
+
+
+@api_view(('GET',))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def predictStockPriceFromDataBase(request):
+    symbol = request.GET['Company']
+    data = fetch_csv(symbol)
+    out = lr_prediction(data)
+
+    return Response({'data': out}, template_name='predict_chart.html')
 
 
 @api_view(('POST',))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
-def predictStockPrice(request):
-    symbol = request.FILES['file'].file
-    data = lr_prediction(symbol)
-    data['day'] = pd.to_datetime(data.day, format='%Y-%m-%d')
-    data['day'] = data['day'].dt.strftime('%Y-%m-%d')
-    data = data.set_index('day')
-    out = {'labels': data.index.tolist(), 'datasets': []}
-    out['datasets'].append({
-        'label': 'Close',
-        'data': data['close'].values.tolist(),
-        'backgroundColor': 'rgba(255,99,132,0.2)'
-    })
-    out['datasets'].append({
-        'label': 'PredictClose',
-        'data': data['pclose'].values.tolist(),
-        'backgroundColor': 'rgba(54,162,64,0.2)'
-    })
+def predictStockPriceFromUpload(request):
+    stock = request.FILES['file'].file
+    df = pd.read_csv(stock)
+    out = lr_prediction(df)
 
-    # data = json.loads(result)
-    return Response({'data': out}, template_name='index.html')
-# return render(request, 'index.html', {'data': data})
+    return Response({'data': out}, template_name='predict_chart.html')

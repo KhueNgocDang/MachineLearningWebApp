@@ -17,9 +17,13 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
 from firstPage import views
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     url('^$', views.index, name='Homepage'),
-    url('predictStockPrice', views.predictStockPrice, name='predictStockPrice'),
+    url('predictStockPriceFromUpload', views.predictStockPriceFromUpload, name='predictStockPriceFromUpload'),
+    url('predictStockPriceFromDataBase', views.predictStockPriceFromDataBase, name='predictStockPriceFromDataBase'),
 ]
+
+urlpatterns += staticfiles_urlpatterns()
