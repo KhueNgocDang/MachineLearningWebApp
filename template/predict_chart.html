@@ -20,13 +20,12 @@
 	<h1>Biểu đồ dữ liệu dự đoán </h1>
 </center>
 <hr />
-	<canvas id="myChartline" width="1000px" height="600px"></canvas>
+	<canvas id="myChartline" width="1000px" height="425px"></canvas>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4"></script>
 
 <script>
-	var endpoint = '/predictStockPriceFromDataBase';
-	var dataJ={{ data|safe }}
+	var endpoint = '/predictStockPrice';
 	var ctx = document.getElementById("myChartline").getContext('2d');
         var chart = new Chart(ctx, {
             // The type of chart we want to create

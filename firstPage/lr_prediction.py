@@ -27,7 +27,7 @@ def lr_prediction(df):
     df['21 days MA'] = df.lclose.rolling(window=21).mean().shift(-20)
     df['lagged volume'] = df.volume.shift(-1)
     df.replace([np.inf, -np.inf], np.nan, inplace=True)
-    dataframe = df.head(100)
+    dataframe = df.head(30)
     dataframe.dropna(subset=['21 days MA'], inplace=True)
     df.dropna(inplace=True)
 
@@ -51,12 +51,12 @@ def lr_prediction(df):
     data = result.set_index('day')
     out = {'labels': data.index.tolist(), 'datasets': []}
     out['datasets'].append({
-        'label': 'Close',
+        'label': 'Giá trị thật',
         'data': data['close'].values.tolist(),
         'backgroundColor': 'rgba(255,99,132,0.2)'
     })
     out['datasets'].append({
-        'label': 'PredictClose',
+        'label': 'Giá trị dự đoán',
         'data': data['pclose'].values.tolist(),
         'backgroundColor': 'rgba(54,162,64,0.2)'
     })
